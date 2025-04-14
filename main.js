@@ -451,9 +451,17 @@ async function main(userlandRW, wkOnly = false) {
 
     
     let ip_list = await get_local_ips();
-    let ip = ip_list.find(obj => obj.ip != "0.0.0.0");
-    if (typeof ip === "undefined" || !ip.ip) {
-        ip = { ip: "", name: "Offline" };
+    let ip_wlan = ip_list.find(obj => obj.name === "wlan0" && obj.ip && obj.ip !== "0.0.0.0");
+
+      let statusImage = document.getElementById("statusImage");
+      if (statusImage) {
+       if (!ip_wlan) {
+           statusImage.src = "offline.png";
+           } else {
+           statusImage.src = "online.png";
+        }
+       statusImage.width = 32;
+       statusImage.height = 32;
     }
 
     // async function probe_sb_elfldr() {
@@ -1181,30 +1189,6 @@ async function main(userlandRW, wkOnly = false) {
     // await log("Done, switching to payloads screen...", LogLevel.INFO);
     await new Promise(resolve => setTimeout(resolve, 300));
     await switchPage("payloads-view");
-
-// أضف العنصر إن لم يكن موجودًا
-    let statusImage = document.getElementById("statusImage");
-    if (!statusImage) {
-        statusImage = document.createElement("img");
-        statusImage.id = "statusImage";
-        statusImage.width = 32;
-        statusImage.height = 32;
-
-        // أضفه في مكان معين داخل payloads-view
-        const payloadsView = document.getElementById("payloads-view");
-        if (payloadsView) {
-        payloadsView.prepend(statusImage); // أو append لو تبيها أسفل
-        }
-    }
-
-    // حدّث الصورة حسب حالة wlan0
-    if (!ip || !ip.ip) {
-        statusImage.src = "offline.png";
-        } else {
-        statusImage.src = "online.png";
-    }
-
-
 
     while (true) {
 
