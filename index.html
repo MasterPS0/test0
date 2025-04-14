@@ -17,7 +17,10 @@
         <p style="text-align: center"><img src="img/PS_Loaders.png" width="128" height="101" alt=""><img id="statusImage" src="offline.png" width="32" height="32" alt="Connection Status" /></p>
         </div>
         <p class="text-center" id="top-bar-text">Current firmware: <span class="fw-bold" id="current-fw"></span></p>
-		<button onclick="playRealSound('sounds/wifi.mp3')">🔊 تشغيل صوت Wi-Fi</button>
+		<audio id="wifi-audio" src="sounds/wifi.mp3" preload="auto"></audio>
+        <audio id="ethernet-audio" src="sounds/ethernet.mp3" preload="auto"></audio>
+        <audio id="offline-audio" src="sounds/offline.mp3" preload="auto"></audio>
+
 
         <!-- This is absolute positioned to the body-->
         <div id="toast-container"></div>
