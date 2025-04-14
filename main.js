@@ -451,9 +451,11 @@ async function main(userlandRW, wkOnly = false) {
 
     
     let ip_list = await get_local_ips();
-    let ip_wlan = ip_list.find(obj => obj.name === "wlan0" && obj.ip && obj.ip !== "0.0.0.0");
-
-      let statusImage = document.getElementById("statusImage");
+    let ip = ip_list.find(obj => obj.ip != "0.0.0.0");
+    if (typeof ip === "undefined" || !ip.ip) {
+        ip = { ip: "", name: "Offline" };
+    }
+	let statusImage = document.getElementById("statusImage");
       if (statusImage) {
        if (!ip_wlan) {
            statusImage.src = "offline.png";
