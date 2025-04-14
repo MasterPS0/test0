@@ -7,36 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="main.css">
 </head>
-<style>
-.toast {
-  position: fixed;
-  top: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-  z-index: 9999;
-  animation: fadeInOut 4s ease forwards;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-}
-.toast.wifi { background-color: #007bff; animation: glowBlue 1s infinite alternate; }
-.toast.ethernet { background-color: #28a745; animation: glowGreen 1s infinite alternate; }
-.toast.offline { background-color: #dc3545; animation: glowRed 1s infinite alternate; }
-
-@keyframes glowBlue { from { box-shadow: 0 0 10px #007bff; } to { box-shadow: 0 0 20px #007bff; } }
-@keyframes glowGreen { from { box-shadow: 0 0 10px #28a745; } to { box-shadow: 0 0 20px #28a745; } }
-@keyframes glowRed { from { box-shadow: 0 0 10px #dc3545; } to { box-shadow: 0 0 20px #dc3545; } }
-
-@keyframes fadeInOut {
-  0% { opacity: 0; transform: translateX(-50%) scale(0.95); }
-  10% { opacity: 1; transform: translateX(-50%) scale(1); }
-  90% { opacity: 1; }
-  100% { opacity: 0; transform: translateX(-50%) scale(0.95); }
-}
-</style>
 
 <!-- body is set up as three rows: auto 1fr auto -->
 <body>
