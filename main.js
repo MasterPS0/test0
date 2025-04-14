@@ -1196,27 +1196,39 @@ async function main(userlandRW, wkOnly = false) {
 
     // await log("Done, switching to payloads screen...", LogLevel.INFO);
     await new Promise(resolve => setTimeout(resolve, 300));
+    await switchPage("payloads-view");
+        // تشغيل الصوت مع فحص التفاعل
     let soundEnabled = false;
 
-        // تفعيل الصوت بعد أول نقرة
-        document.addEventListener("click", () => {
+        // نفعّل الصوت بعد أول تفاعل من المستخدم (نقرة أو ضغط)
+    document.addEventListener("click", () => {
         soundEnabled = true;
-        }, { once: true });
+    }, { once: true });
 
     function playSound(src) {
-    if (!soundEnabled) {
-        showToast("🖱️ اضغط على الصفحة لتفعيل الصوت أولاً", 3000, "offline");
-        return;
-    }
+        if (!soundEnabled) return;
 
         const audio = new Audio(src);
         audio.volume = 0.6;
         audio.play().catch((err) => {
         console.warn(`⚠️ فشل تشغيل الصوت [${src}]:`, err);
         showToast("⚠️ لم يتم تشغيل الصوت", 3000, "offline");
-    });
+        });
     }
 
+        // بعد switchPage("payloads-view") مباشرة:
+    if (ip.name === "Offline") {
+        showToast("❌ Offline", 4000, "offline");
+        playSound("sounds/offline.mp3");
+
+    }   else if (ip.name === "wlan0") {
+        showToast("📶 Connected via Wi-Fi (wlan0)", 4000, "wifi");
+        playSound("sounds/wifi.mp3");
+
+    }   else if (ip.name === "eth0") {
+        showToast("🔌 Connected via Ethernet (eth0)", 4000, "ethernet");
+        playSound("sounds/ethernet.mp3");
+    }
 
 
 
