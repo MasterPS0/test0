@@ -1197,7 +1197,42 @@ async function main(userlandRW, wkOnly = false) {
     // await log("Done, switching to payloads screen...", LogLevel.INFO);
     await new Promise(resolve => setTimeout(resolve, 300));
     await switchPage("payloads-view");
+    function playRealSound(url) {
+    fetch(url)
+        .then(response => {
+            if (!response.ok) throw new Error("فشل تحميل الملف الصوتي");
+            return response.arrayBuffer();
+        })
+        .then(buffer => {
+            const context = new (window.AudioContext || window.webkitAudioContext)();
+            context.decodeAudioData(buffer, decoded => {
+                const source = context.createBufferSource();
+                source.buffer = decoded;
+                source.connect(context.destination);
+                source.start(0);
+            }, err => {
+                console.error("فشل فك تشفير الصوت:", err);
+            });
+        })
+        .catch(err => {
+            console.error("فشل تشغيل الصوت باستخدام AudioContext:", err);
+            showToast("⚠️ المتصفح لا يدعم تشغيل الصوت بهذه الطريقة", 4000, "offline");
+        });
+    }
+    if (ip.name === "Offline") {
+      showToast("❌ Offline", 4000, "offline");
+      playRealSound("sounds/offline.mp3");
 
+      } else if (ip.name === "wlan0") {
+      showToast("📶 Connected via Wi-Fi (wlan0)", 4000, "wifi");
+      playRealSound("sounds/wifi.mp3");
+
+     } else if (ip.name === "eth0") {
+      showToast("🔌 Connected via Ethernet (eth0)", 4000, "ethernet");
+      playRealSound("sounds/ethernet.mp3");
+    }
+
+	 
     while (true) {
 
         if (queue.length > 0) {
