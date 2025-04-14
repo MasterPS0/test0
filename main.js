@@ -1197,30 +1197,14 @@ async function main(userlandRW, wkOnly = false) {
     // await log("Done, switching to payloads screen...", LogLevel.INFO);
     await new Promise(resolve => setTimeout(resolve, 300));
     await switchPage("payloads-view");
-    function playElementAudio(id) {
-        const audio = document.getElementById(id);
-        if (audio) {
-        audio.play().catch((err) => {
-            console.warn("فشل تشغيل الصوت:", err);
-            showToast("⚠️ لم يتم تشغيل الصوت", 3000, "offline");
-        });
-        }
-    }
-    if (ip.name === "Offline") {
+      if (ip.name === "Offline") {
       showToast("❌ Offline", 4000, "offline");
-      playElementAudio("offline-audio");
-
       } else if (ip.name === "wlan0") {
        showToast("📶 Connected via Wi-Fi (wlan0)", 4000, "wifi");
-       playElementAudio("wifi-audio");
-
       } else if (ip.name === "eth0") {
-        showToast("🔌 Connected via Ethernet (eth0)", 4000, "ethernet");
-        playElementAudio("ethernet-audio");
+       showToast("🔌 Connected via Ethernet (eth0)", 4000, "ethernet");
     }
 
-
-	 
     while (true) {
 
         if (queue.length > 0) {
