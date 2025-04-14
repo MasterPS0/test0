@@ -1197,23 +1197,39 @@ async function main(userlandRW, wkOnly = false) {
     // await log("Done, switching to payloads screen...", LogLevel.INFO);
     await new Promise(resolve => setTimeout(resolve, 300));
     await switchPage("payloads-view");
-	
-	function playSound(src) {
-      const audio = new Audio(src);
-   	  audio.volume = 0.6;
-  	  audio.play().catch(() => {}); // تجاهل الأخطاء في حالة رفض التشغيل التلقائي
+        // تشغيل الصوت مع فحص التفاعل
+    let soundEnabled = false;
+
+        // نفعّل الصوت بعد أول تفاعل من المستخدم (نقرة أو ضغط)
+    document.addEventListener("click", () => {
+        soundEnabled = true;
+    }, { once: true });
+
+    function playSound(src) {
+        if (!soundEnabled) return;
+
+        const audio = new Audio(src);
+        audio.volume = 0.6;
+        audio.play().catch((err) => {
+        console.warn(`⚠️ فشل تشغيل الصوت [${src}]:`, err);
+        showToast("⚠️ لم يتم تشغيل الصوت", 3000, "offline");
+        });
     }
 
-	  if (ip.name === "Offline") {
- 	   showToast("❌ Offline", 4000, "offline");
-  	  	playSound("assets/sounds/offline.mp3");
-		} else if (ip.name === "wlan0") {
-   	 	showToast("📶 Connected via Wi-Fi (wlan0)", 4000, "wifi");
-    	playSound("assets/sounds/wifi.mp3");
-		} else if (ip.name === "eth0") {
-    	showToast("🔌 Connected Ethernet (eth0)", 4000, "ethernet");
-   	    playSound("assets/sounds/ethernet.mp3");
+        // بعد switchPage("payloads-view") مباشرة:
+    if (ip.name === "Offline") {
+        showToast("❌ Offline", 4000, "offline");
+        playSound("assets/sounds/offline.mp3");
+
+    }   else if (ip.name === "wlan0") {
+        showToast("📶 Connected via Wi-Fi (wlan0)", 4000, "wifi");
+        playSound("assets/sounds/wifi.mp3");
+
+    }   else if (ip.name === "eth0") {
+        showToast("🔌 Connected via Ethernet (eth0)", 4000, "ethernet");
+        playSound("assets/sounds/ethernet.mp3");
     }
+
 
 
     while (true) {
