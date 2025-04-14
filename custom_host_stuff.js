@@ -202,32 +202,47 @@ const TOAST_ERROR_TIMEOUT = 5000;
 function showToast(message, timeout = 2000, type = "") {
     const toastContainer = document.getElementById('toast-container');
     const toast = document.createElement('div');
-    toast.className = 'toast';
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
 
-    // ألوان حسب النوع
+    const baseStyle = `
+        position: fixed;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        z-index: 9999;
+        animation: fadeInOut 4s ease forwards;
+    `;
+    toast.style.cssText = baseStyle;
+
     if (type === "wifi") {
-        toast.style.backgroundColor = "#007aff"; // أزرق
+        toast.style.backgroundColor = "#007bff";
+        toast.style.boxShadow = "0 0 20px #007bff";
+        toast.style.animation += ", glowBlue 1s infinite alternate";
     } else if (type === "ethernet") {
-        toast.style.backgroundColor = "#28a745"; // أخضر
+        toast.style.backgroundColor = "#28a745";
+        toast.style.boxShadow = "0 0 20px #28a745";
+        toast.style.animation += ", glowGreen 1s infinite alternate";
     } else if (type === "offline") {
-        toast.style.backgroundColor = "#dc3545"; // أحمر
+        toast.style.backgroundColor = "#dc3545";
+        toast.style.boxShadow = "0 0 20px #dc3545";
+        toast.style.animation += ", glowRed 1s infinite alternate";
     }
 
-    toast.textContent = message;
     toastContainer.appendChild(toast);
 
-    // Trigger reflow
-    toast.offsetHeight;
-    toast.classList.add('show');
-
-    if (timeout > 0) {
-        setTimeout(() => {
-            removeToast(toast);
-        }, timeout);
-    }
+    setTimeout(() => {
+        removeToast(toast);
+    }, timeout);
 
     return toast;
 }
+
 
 
 function updateToastMessage(toast, message) {
