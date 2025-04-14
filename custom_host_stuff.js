@@ -155,7 +155,6 @@ function registerAppCacheEventHandlers() {
 
     appCache.addEventListener('noupdate', function (e) {
         createOrUpdateAppCacheToast('Cache is up-to-date.', 1500);
-		toast.style.backgroundColor = "#F0F7FF";
     }, false);
 
     appCache.addEventListener('obsolete', function (e) {

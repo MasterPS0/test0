@@ -469,9 +469,6 @@ async function main(userlandRW, wkOnly = false) {
         consoleView.classList.add(ip.name === "Offline" ? "offline" : "online");
     }
 
-    
-
-
     // async function probe_sb_elfldr() {
     //     let fd = (await chain.syscall(SYS_SOCKET, AF_INET, SOCK_STREAM, 0)).low << 0;
     //     if (fd <= 0) {
