@@ -450,36 +450,18 @@ async function main(userlandRW, wkOnly = false) {
     }
 
     
-    try {
     let ip_list = await get_local_ips();
-    let ip = ip_list.find(obj => obj.ip && obj.ip !== "0.0.0.0");
+    let ip = ip_list.find(obj => obj.ip != "0.0.0.0");
 
-    const statusImage = document.getElementById("statusImage");
+    if (typeof ip === "undefined" || !ip.ip) {
+    ip = { ip: "", name: "Offline" };
 
-    if (!ip || !ip.ip) {
-        ip = { ip: "", name: "Offline" };
-        if (statusImage) {
-            statusImage.src = "offline.png";
-            statusImage.width = 64;
-            statusImage.height = 64;
-        }
+    // تغيير الصورة إلى صورة Offline
+    document.getElementById("statusImage").src = "offline.png";
     } else {
-        if (statusImage) {
-            statusImage.src = "online.png";
-            statusImage.width = 64;
-            statusImage.height = 64;
-        }
-     }
-    } catch (error) {
-    console.error("Error detecting IP status:", error);
-    const statusImage = document.getElementById("statusImage");
-    if (statusImage) {
-        statusImage.src = "offline.png";
-        statusImage.width = 64;
-        statusImage.height = 64;
-     }
+    // تغيير الصورة إلى صورة Online أو حسب الحالة
+    document.getElementById("statusImage").src = "online.png";
     }
-
 
     // async function probe_sb_elfldr() {
     //     let fd = (await chain.syscall(SYS_SOCKET, AF_INET, SOCK_STREAM, 0)).low << 0;
