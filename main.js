@@ -1181,17 +1181,19 @@ async function main(userlandRW, wkOnly = false) {
     // await log("Done, switching to payloads screen...", LogLevel.INFO);
     await new Promise(resolve => setTimeout(resolve, 300));
     await switchPage("payloads-view");
-	
-       // بعد الانتقال للصفحة، عدل الصورة مرة ثانية
-    let statusImage = document.getElementById("statusImage");
-       if (statusImage) {
-       if (!ip || !ip.ip) {
+
+     // بعد الانتقال للصفحة، عدل الصورة مرة ثانية
+     let statusImage = document.getElementById("statusImage");
+     if (statusImage) {
+      if (!ip || !ip.ip) {
         statusImage.src = "offline.png";
-        } else {
-        statusImage.src = "online.png";
-        }
+       } else {
+         statusImage.src = "online.png";
+       }
         statusImage.width = 64;
         statusImage.height = 64;
+    }
+
 
     while (true) {
 
