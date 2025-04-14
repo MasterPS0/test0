@@ -451,21 +451,19 @@ async function main(userlandRW, wkOnly = false) {
 
     
         let ip_list = await get_local_ips();
-        let ip = ip_list.find(obj => obj.ip && obj.ip !== "0.0.0.0");
+        let ip = ip_list.find(obj => obj.name === "wlan0" && obj.ip && obj.ip !== "0.0.0.0");
 
-         // الحصول على العنصر والتأكد من وجوده
         let statusImage = document.getElementById("statusImage");
         if (statusImage) {
-           if (!ip || !ip.ip) {
-           ip = { ip: "", name: "Offline" };
-           statusImage.src = "offline.png";
-           } else {
-           statusImage.src = "online.png";
-        }
+          if (!ip || !ip.ip) {
+          ip = { ip: "", name: "Offline" };
+            statusImage.src = "offline.png";
+          } else {
+            statusImage.src = "online.png";
+          }
 
-           // ضبط الحجم دائمًا
-           statusImage.width = 64;
-           statusImage.height = 64;
+          statusImage.width = 64;
+          statusImage.height = 64;
         }
 
 
