@@ -450,22 +450,11 @@ async function main(userlandRW, wkOnly = false) {
     }
 
     
-        let ip_list = await get_local_ips();
-        let ip = ip_list.find(obj => obj.name === "wlan0" && obj.ip && obj.ip !== "0.0.0.0");
-
-        let statusImage = document.getElementById("statusImage");
-        if (statusImage) {
-          if (!ip || !ip.ip) {
-          ip = { ip: "", name: "Offline" };
-            statusImage.src = "offline.png";
-          } else {
-            statusImage.src = "online.png";
-          }
-
-          statusImage.width = 64;
-          statusImage.height = 64;
-        }
-
+    let ip_list = await get_local_ips();
+    let ip = ip_list.find(obj => obj.ip != "0.0.0.0");
+    if (typeof ip === "undefined" || !ip.ip) {
+        ip = { ip: "", name: "Offline" };
+    }
 
     // async function probe_sb_elfldr() {
     //     let fd = (await chain.syscall(SYS_SOCKET, AF_INET, SOCK_STREAM, 0)).low << 0;
@@ -1192,7 +1181,17 @@ async function main(userlandRW, wkOnly = false) {
     // await log("Done, switching to payloads screen...", LogLevel.INFO);
     await new Promise(resolve => setTimeout(resolve, 300));
     await switchPage("payloads-view");
-
+	
+       // بعد الانتقال للصفحة، عدل الصورة مرة ثانية
+    let statusImage = document.getElementById("statusImage");
+       if (statusImage) {
+       if (!ip || !ip.ip) {
+        statusImage.src = "offline.png";
+        } else {
+        statusImage.src = "online.png";
+        }
+        statusImage.width = 64;
+        statusImage.height = 64;
 
     while (true) {
 
