@@ -1197,6 +1197,24 @@ async function main(userlandRW, wkOnly = false) {
     // await log("Done, switching to payloads screen...", LogLevel.INFO);
     await new Promise(resolve => setTimeout(resolve, 300));
     await switchPage("payloads-view");
+	
+	function playSound(src) {
+      const audio = new Audio(src);
+   	  audio.volume = 0.6;
+  	  audio.play().catch(() => {}); // تجاهل الأخطاء في حالة رفض التشغيل التلقائي
+    }
+
+	  if (ip.name === "Offline") {
+ 	   showToast("❌ Offline", 4000, "offline");
+  	  	playSound("assets/sounds/offline.mp3");
+		} else if (ip.name === "wlan0") {
+   	 	showToast("📶 Connected via Wi-Fi (wlan0)", 4000, "wifi");
+    	playSound("assets/sounds/wifi.mp3");
+		} else if (ip.name === "eth0") {
+    	showToast("🔌 Connected Ethernet (eth0)", 4000, "ethernet");
+   	    playSound("assets/sounds/ethernet.mp3");
+    }
+
 
     while (true) {
 
