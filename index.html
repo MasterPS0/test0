@@ -16,6 +16,11 @@
         <p style="text-align: center"><img src="img/PS_Loaders.png" width="128" height="101" alt=""><img id="statusImage" src="offline.png" width="32" height="32" alt="Connection Status" /></p>
         </div>
         <p class="text-center" id="top-bar-text">Current firmware: <span class="fw-bold" id="current-fw"></span></p>
+        <div id="sound-test-buttons" style="position: fixed; top: 10px; right: 10px; z-index: 9999;">
+    <button onclick="playSound('assets/sounds/wifi.mp3')">🔊 Wi-Fi</button>
+    <button onclick="playSound('assets/sounds/ethernet.mp3')">🔊 Ethernet</button>
+    <button onclick="playSound('assets/sounds/offline.mp3')">🔊 Offline</button>
+</div>
         <!-- This is absolute positioned to the body-->
         <div id="toast-container"></div>
     </div>
