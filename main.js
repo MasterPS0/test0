@@ -449,28 +449,29 @@ async function main(userlandRW, wkOnly = false) {
         return iplist;
     }
 
-    
+        // ابحث عن واجهة wlan0 بالتحديد
     let ip_list = await get_local_ips();
 
-        // ابحث عن واجهة wlan0 بالتحديد
+        // ابحث عن wlan0 أولاً
     let ip_wlan = ip_list.find(obj => obj.name === "wlan0" && obj.ip && obj.ip !== "0.0.0.0");
 
-        // لو ما وجدنا أي IP، نخزن حالة افتراضية
-    let ip = ip_list.find(obj => obj.ip !== "0.0.0.0");
-        if (!ip || !ip.ip) {
-        ip = { ip: "", name: "Offline" };
-    }
+        // إذا لم يوجد wlan0، ابحث عن eth0
+    let ip_eth = ip_list.find(obj => obj.name === "eth0" && obj.ip && obj.ip !== "0.0.0.0");
+
+        // اختَر أول واجهة متصلة حسب الأولوية
+    let ip = ip_wlan || ip_eth || { ip: "", name: "Offline" };
 
     let statusImage = document.getElementById("statusImage");
         if (statusImage) {
-        if (!ip_wlan) {
-            statusImage.src = "offline.png";
-            } else {
-            statusImage.src = "online.png";
+        if (ip.name === "Offline") {
+        statusImage.src = "offline.png";
+        } else {
+        statusImage.src = "online.png";
         }
         statusImage.width = 32;
         statusImage.height = 32;
     }
+
 
 
     // async function probe_sb_elfldr() {
