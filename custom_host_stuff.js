@@ -155,6 +155,7 @@ function registerAppCacheEventHandlers() {
 
     appCache.addEventListener('noupdate', function (e) {
         createOrUpdateAppCacheToast('Cache is up-to-date.', 1500);
+		toast.style.backgroundColor = "#F0F7FF";
     }, false);
 
     appCache.addEventListener('obsolete', function (e) {
@@ -202,47 +203,32 @@ const TOAST_ERROR_TIMEOUT = 5000;
 function showToast(message, timeout = 2000, type = "") {
     const toastContainer = document.getElementById('toast-container');
     const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
+    toast.className = 'toast';
 
-    const baseStyle = `
-        position: fixed;
-        top: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 12px 20px;
-        border-radius: 10px;
-        font-size: 18px;
-        font-weight: bold;
-        color: white;
-        z-index: 9999;
-        animation: fadeInOut 4s ease forwards;
-    `;
-    toast.style.cssText = baseStyle;
-
+    // ألوان حسب النوع
     if (type === "wifi") {
-        toast.style.backgroundColor = "#007bff";
-        toast.style.boxShadow = "0 0 20px #007bff";
-        toast.style.animation += ", glowBlue 1s infinite alternate";
+        toast.style.backgroundColor = "#007aff"; // أزرق
     } else if (type === "ethernet") {
-        toast.style.backgroundColor = "#28a745";
-        toast.style.boxShadow = "0 0 20px #28a745";
-        toast.style.animation += ", glowGreen 1s infinite alternate";
+        toast.style.backgroundColor = "#28a745"; // أخضر
     } else if (type === "offline") {
-        toast.style.backgroundColor = "#dc3545";
-        toast.style.boxShadow = "0 0 20px #dc3545";
-        toast.style.animation += ", glowRed 1s infinite alternate";
+        toast.style.backgroundColor = "#dc3545"; // أحمر
     }
 
+    toast.textContent = message;
     toastContainer.appendChild(toast);
 
-    setTimeout(() => {
-        removeToast(toast);
-    }, timeout);
+    // Trigger reflow
+    toast.offsetHeight;
+    toast.classList.add('show');
+
+    if (timeout > 0) {
+        setTimeout(() => {
+            removeToast(toast);
+        }, timeout);
+    }
 
     return toast;
 }
-
 
 
 function updateToastMessage(toast, message) {
