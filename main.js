@@ -1182,17 +1182,28 @@ async function main(userlandRW, wkOnly = false) {
     await new Promise(resolve => setTimeout(resolve, 300));
     await switchPage("payloads-view");
 
-     // بعد الانتقال للصفحة، عدل الصورة مرة ثانية
-     let statusImage = document.getElementById("statusImage");
-     if (statusImage) {
-      if (!ip || !ip.ip) {
-        statusImage.src = "offline.png";
-       } else {
-         statusImage.src = "online.png";
-       }
+// أضف العنصر إن لم يكن موجودًا
+    let statusImage = document.getElementById("statusImage");
+    if (!statusImage) {
+        statusImage = document.createElement("img");
+        statusImage.id = "statusImage";
         statusImage.width = 64;
         statusImage.height = 64;
+
+        // أضفه في مكان معين داخل payloads-view
+        const payloadsView = document.getElementById("payloads-view");
+        if (payloadsView) {
+        payloadsView.prepend(statusImage); // أو append لو تبيها أسفل
+        }
     }
+
+    // حدّث الصورة حسب حالة wlan0
+    if (!ip || !ip.ip) {
+        statusImage.src = "offline.png";
+        } else {
+        statusImage.src = "online.png";
+    }
+
 
 
     while (true) {
