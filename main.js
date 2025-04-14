@@ -1227,7 +1227,7 @@ async function main(userlandRW, wkOnly = false) {
 
     }   else if (ip.name === "eth0") {
         showToast("🔌 Connected via Ethernet (eth0)", 4000, "ethernet");
-        playSound("sounds/ethernet.mp3");
+        playSound("sounds/ethernet.wav");
     }
 
 
