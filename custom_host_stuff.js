@@ -211,8 +211,6 @@ function showToast(message, timeout = 4000, type = "wifi") {
     }, timeout);
 }
 
-
-
 function updateToastMessage(toast, message) {
     if (!toast) {
         return;
