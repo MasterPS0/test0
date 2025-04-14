@@ -1197,42 +1197,38 @@ async function main(userlandRW, wkOnly = false) {
     // await log("Done, switching to payloads screen...", LogLevel.INFO);
     await new Promise(resolve => setTimeout(resolve, 300));
     await switchPage("payloads-view");
+        // تشغيل الصوت مع فحص التفاعل
+    let soundEnabled = false;
 
-// تأكد من تفعيل الصوت مرة واحدة فقط
-if (!window.soundEnabledInitialized) {
-    window.soundEnabled = false;
+        // نفعّل الصوت بعد أول تفاعل من المستخدم (نقرة أو ضغط)
     document.addEventListener("click", () => {
-        window.soundEnabled = true;
+        soundEnabled = true;
     }, { once: true });
-    window.soundEnabledInitialized = true;
-}
 
-// دالة لتشغيل الصوت
-function playSound(src) {
-    if (!window.soundEnabled) return;
+    function playSound(src) {
+        if (!soundEnabled) return;
 
-    const audio = new Audio(src);
-    audio.volume = 0.6;
-    audio.play().catch((err) => {
+        const audio = new Audio(src);
+        audio.volume = 0.6;
+        audio.play().catch((err) => {
         console.warn(`⚠️ فشل تشغيل الصوت [${src}]:`, err);
         showToast("⚠️ لم يتم تشغيل الصوت", 3000, "offline");
-    });
-}
+        });
+    }
 
-// تحديد الصوت حسب حالة الشبكة
-if (ip.name === "Offline") {
-    showToast("❌ Offline", 4000, "offline");
-    playSound("sounds/offline.mp3");
+        // بعد switchPage("payloads-view") مباشرة:
+    if (ip.name === "Offline") {
+        showToast("❌ Offline", 4000, "offline");
+        playSound("sounds/offline.mp3");
 
-} else if (ip.name === "wlan0") {
-    showToast("📶 Connected via Wi-Fi (wlan0)", 4000, "wifi");
-    playSound("sounds/wifi.mp3");
+    }   else if (ip.name === "wlan0") {
+        showToast("📶 Connected via Wi-Fi (wlan0)", 4000, "wifi");
+        playSound("sounds/wifi.mp3");
 
-} else if (ip.name === "eth0") {
-    showToast("🔌 Connected via Ethernet (eth0)", 4000, "ethernet");
-    playSound("sounds/ethernet.mp3");
-}
-
+    }   else if (ip.name === "eth0") {
+        showToast("🔌 Connected via Ethernet (eth0)", 4000, "ethernet");
+        playSound("sounds/ethernet.mp3");
+    }
 
 
 
