@@ -452,26 +452,24 @@ async function main(userlandRW, wkOnly = false) {
         // ابحث عن واجهة wlan0 بالتحديد
     let ip_list = await get_local_ips();
 
-        // ابحث عن wlan0 أولاً
     let ip_wlan = ip_list.find(obj => obj.name === "wlan0" && obj.ip && obj.ip !== "0.0.0.0");
-
-        // إذا لم يوجد wlan0، ابحث عن eth0
     let ip_eth = ip_list.find(obj => obj.name === "eth0" && obj.ip && obj.ip !== "0.0.0.0");
-
-        // اختَر أول واجهة متصلة حسب الأولوية
     let ip = ip_wlan || ip_eth || { ip: "", name: "Offline" };
 
     let statusImage = document.getElementById("statusImage");
         if (statusImage) {
-        if (ip.name === "Offline") {
-        statusImage.src = "offline.png";
-        } else {
-        statusImage.src = "online.png";
-        }
+        statusImage.src = ip.name === "Offline" ? "offline.png" : "online.png";
         statusImage.width = 32;
         statusImage.height = 32;
     }
 
+    let consoleView = document.getElementById("console-view");
+        if (consoleView) {
+        consoleView.classList.remove("online", "offline");
+        consoleView.classList.add(ip.name === "Offline" ? "offline" : "online");
+    }
+
+    
 
 
     // async function probe_sb_elfldr() {
