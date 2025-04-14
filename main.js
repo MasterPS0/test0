@@ -1187,8 +1187,8 @@ async function main(userlandRW, wkOnly = false) {
     if (!statusImage) {
         statusImage = document.createElement("img");
         statusImage.id = "statusImage";
-        statusImage.width = 64;
-        statusImage.height = 64;
+        statusImage.width = 32;
+        statusImage.height = 32;
 
         // أضفه في مكان معين داخل payloads-view
         const payloadsView = document.getElementById("payloads-view");
