@@ -41,6 +41,16 @@ const payload_map = [
         toPort: 9021
     },
     {
+        displayTitle: "poc",
+        description: "poc",
+        fileName: "poc.elf",
+        author: "",
+        projectSource: "",
+        binarySource: "",
+        version: "0",
+        toPort: 9021
+    },
+    {
         displayTitle: "ps5-kstuff",
         description: "FPKG enabler",
         fileName: "kstuff.elf",
