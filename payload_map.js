@@ -41,13 +41,23 @@ const payload_map = [
         toPort: 9021
     },
     {
-        displayTitle: "poc",
-        description: "poc",
-        fileName: "poc.elf",
-        author: "",
+        displayTitle: "etaHEN",
+        description: "AIO HEN",
+        fileName: "etaHEN2.1.bin",
+        author: "LightningMods",
         projectSource: "",
         binarySource: "",
-        version: "0",
+        version: "2.1",
+        toPort: 9021
+    },
+	{
+        displayTitle: "pocv02",
+        description: "pocv02",
+        fileName: "pocv02.elf",
+        author: "LightningMods",
+        projectSource: "",
+        binarySource: "",
+        version: "2",
         toPort: 9021
     },
     {
