@@ -49,7 +49,7 @@ const payload_map = [
         binarySource: "",
         version: "2.1",
         toPort: 9021,
-		imageUrl: "imag/etaHEN.png"
+		imageUrl: "img/etaHEN.png"
     },
 	{
         displayTitle: "pocv02",
