@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>Status</title>
+<title>Status Display</title>
+
 <script>
+// عدّل القيم حسب ما تريد
+const firmware = "FW 5.05";   // إصدار الجهاز
+const elapsed  = 14;          // مدة التجمّد (ثواني)
+const count    = 3;           // عدد الكراش المسجلة
 
-const firmware = "PS5 FW 5.10"; 
-const elapsed = 12;            
-const count = 3;             
-
-alert(
-        ${firmware}\n
-        Last run may have triggered instability or crash ⚠️\n\n
-        Crash recovery delay: ${elapsed}s\n
-        Total crashes detected: ${count}
-    );
+window.onload = () => {
+  alert(
+`${firmware}
+Last run may have triggered instability or crash ⚠️
+Crash recovery delay: ${elapsed}s
+Total crashes detected: ${count}`
+  );
 };
 </script>
+
 </head>
 <body>
 </body>
